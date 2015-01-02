@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ro.satrapu.openshift.sample;
 
 import java.io.IOException;
@@ -10,7 +5,6 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.servlet.ServletException;

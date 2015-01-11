@@ -13,3 +13,9 @@ hs_err_pid*
 
 # Maven artifacts
 /target
+
+# Eclipse IDE artifacts
+*.classpath
+*.project
+*.jsdtscope
+/.settings

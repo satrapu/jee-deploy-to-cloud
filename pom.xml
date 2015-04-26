@@ -11,6 +11,55 @@
 
     <name>jee-deploy-to-cloud</name>
 
+    <description>This applications was written in order to experiment with the ways a JEE web application must be
+        configured to successfully deploy it to various (free) cloud providers like Heroku or OpenShift.
+    </description>
+
+    <inceptionYear>2015</inceptionYear>
+
+    <ciManagement>
+        <system>drone.io</system>
+        <url>https://drone.io/github.com/satrapu/jee-deploy-to-cloud</url>
+    </ciManagement>
+
+    <scm>
+        <connection>https://github.com/satrapu/jee-deploy-to-cloud.git</connection>
+        <url>https://github.com/satrapu/jee-deploy-to-cloud/commits</url>
+        <developerConnection>https://github.com/satrapu/jee-deploy-to-cloud.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/satrapu/jee-deploy-to-cloud/issues</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <url>https://github.com/satrapu/jee-deploy-to-cloud</url>
+
+    <organization>
+        <url>http://crossprogramming.com/</url>
+        <name>crossprogramming</name>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>satrapu</id>
+            <name>Bogdan Marian</name>
+            <email>bogdan.marian77@gmail.com</email>
+            <timezone>2</timezone>
+            <url>https://www.linkedin.com/in/bmarian</url>
+            <roles>
+                <role>Main Commiter</role>
+            </roles>
+        </developer>
+    </developers>
+
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,7 +76,56 @@
 
     <profiles>
         <profile>
+            <id>heroku</id>
+            <activation>
+                <property>
+                    <name>cloud_provider</name>
+                    <value>heroku</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>2.10</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>com.github.jsimone</groupId>
+                                            <artifactId>webapp-runner</artifactId>
+                                            <version>7.0.57.1</version>
+                                            <destFileName>webapp-runner.jar</destFileName>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>wildfly</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!--
+        <profile>
             <id>openshift</id>
+            <activation>
+                <property>
+                    <name>cloud_provider</name>
+                    <value>openshift</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -41,12 +139,12 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>wildfly</id>
-        </profile>
+        -->
     </profiles>
 
     <build>
+        <finalName>${project.name}</finalName>
+        <defaultGoal>clean package</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -68,29 +166,6 @@
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.github.jsimone</groupId>
-                                    <artifactId>webapp-runner</artifactId>
-                                    <version>7.0.57.1</version>
-                                    <destFileName>webapp-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

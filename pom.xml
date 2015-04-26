@@ -78,10 +78,7 @@
         <profile>
             <id>heroku</id>
             <activation>
-                <property>
-                    <name>cloud_provider</name>
-                    <value>heroku</value>
-                </property>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
@@ -115,10 +112,7 @@
         <profile>
             <id>openshift</id>
             <activation>
-                <property>
-                    <name>cloud_provider</name>
-                    <value>openshift</value>
-                </property>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>

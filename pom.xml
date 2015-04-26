@@ -78,7 +78,7 @@
         <profile>
             <id>heroku</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <build>
                 <plugins>
@@ -88,6 +88,14 @@
                         <version>2.10</version>
                         <executions>
                             <execution>
+                                <id>copy-dependencies</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>copy-webapp-runner</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>copy</goal>
@@ -131,7 +139,7 @@
         <profile>
             <id>wildfly</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
         </profile>
     </profiles>

@@ -23,9 +23,9 @@
     </ciManagement>
 
     <scm>
-        <connection>https://github.com/satrapu/jee-deploy-to-cloud.git</connection>
+        <connection>scm:git:https://github.com/satrapu/jee-deploy-to-cloud.git</connection>
         <url>https://github.com/satrapu/jee-deploy-to-cloud/commits</url>
-        <developerConnection>https://github.com/satrapu/jee-deploy-to-cloud.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/satrapu/jee-deploy-to-cloud.git</developerConnection>
     </scm>
 
     <issueManagement>
@@ -111,13 +111,7 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>wildfly</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <!--
+
         <profile>
             <id>openshift</id>
             <activation>
@@ -139,7 +133,13 @@
                 </plugins>
             </build>
         </profile>
-        -->
+
+        <profile>
+            <id>wildfly</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
     </profiles>
 
     <build>

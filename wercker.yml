@@ -15,4 +15,5 @@ build:
     - script:
         name: run Maven build
         code: |-
-          mvn clean install -Dcloud_provider="$cloud_provider"
+          echo Cloud provider to use: $cloud_provider
+          mvn clean install -Dcloud_provider=$cloud_provider

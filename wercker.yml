@@ -2,13 +2,13 @@ box: wdinau/java8@0.0.1
 build:
   steps:
     - script:
-      name: Show Java & Maven information
-      code: |
-        echo $JAVA_HOME
-        java -version
-        javac -version
-        mvn -version
+        name: Show Java & Maven information
+        code: |-
+          echo $JAVA_HOME
+          java -version
+          javac -version
+          mvn -version
     - script:
-      name: Run Maven build
-      code: |
-        ./mvn clean install -Dcloud_provider="$cloud_provider"
+        name: Run Maven build
+        code: |-
+          ./mvn clean install -Dcloud_provider="$cloud_provider"

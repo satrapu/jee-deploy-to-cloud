@@ -1,8 +1,8 @@
-box: joostvandieten/java8-oracle-rsync@0.0.1
+box: wdinau/java8@0.0.1
 build:
   steps:
     - install-packages:
-        packages: git
+        packages: bash git rsync
     - script:
         name: show Java information
         code: |-

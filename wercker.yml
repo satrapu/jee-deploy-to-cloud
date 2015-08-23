@@ -1,8 +1,6 @@
 box: wdinau/java8@0.0.1
 build:
   steps:
-    - install-packages:
-        packages: bash git rsync
     - script:
         name: show Java information
         code: |-
@@ -19,3 +17,9 @@ build:
         code: |-
           echo Maven profile to use: $MAVEN_PROFILE
           mvn clean package -P $MAVEN_PROFILE
+deploy:
+  steps:
+    - install-packages:
+          packages: bash git rsync
+    - openshift:
+    

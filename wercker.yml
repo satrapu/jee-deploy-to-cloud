@@ -21,5 +21,4 @@ deploy:
   steps:
     - install-packages:
           packages: bash git rsync
-    - openshift-deploy:
     

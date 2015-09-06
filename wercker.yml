@@ -20,7 +20,7 @@ build:
 deploy:
   steps:
     - install-packages:
-      packages: bash git rsync
+        packages: bash git rsync
     - heroku-deploy
     - openshift-deploy
 

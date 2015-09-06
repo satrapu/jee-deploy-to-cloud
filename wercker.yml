@@ -18,10 +18,22 @@ build:
           echo Maven profile to use: $MAVEN_PROFILE
           mvn clean package -P $MAVEN_PROFILE
 deploy:
+  # This will be used, if no deploy target is found.
   steps:
-    - install-packages:
-        packages: bash git rsync
-    - heroku-deploy
-    - openshift-deploy
+  - script:
+      name: deploy
+      code: echo default deploy
+      
+  # This will be used, if the deploy target "dev-heroku" is used.
+  dev-heroku:
+    steps:
+      - heroku-deploy
+      
+  # This will be used, if the deploy target "dev-openshift" is used.
+  dev-openshift:
+    steps:
+      - install-packages:
+          packages: bash git rsync
+      - openshift-deploy
 
     

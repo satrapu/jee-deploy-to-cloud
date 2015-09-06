@@ -27,7 +27,10 @@ deploy:
   # This will be used, if the deploy target "dev-heroku" is used.
   dev-heroku:
     steps:
-      - heroku-deploy
+      - heroku-deploy:
+          key: $HEROKU_KEY
+          user: $HEROKU_USER
+          app-name: $HEROKU_APP_NAME
       
   # This will be used, if the deploy target "dev-openshift" is used.
   dev-openshift:

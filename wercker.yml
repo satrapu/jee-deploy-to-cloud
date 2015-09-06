@@ -18,13 +18,10 @@ build:
           echo Maven profile to use: $MAVEN_PROFILE
           mvn clean package -P $MAVEN_PROFILE
 deploy:
-  dev-heroku:
-    steps:
-      - heroku-deploy
-  dev-openshift:
-    steps:
-      - install-packages:
-            packages: bash git rsync
-      - openshift-deploy
+  steps:
+    - install-packages:
+      packages: bash git rsync
+    - heroku-deploy
+    - openshift-deploy
 
     

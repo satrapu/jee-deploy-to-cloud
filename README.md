@@ -17,4 +17,4 @@ This application is deployed to different cloud providers using [wercker] (http:
 Live Application
 --
 * Heroku: https://jee-deploy-to-cloud.herokuapp.com/status
-* OpenShift: not yet configured
+* OpenShift: http://jee-satrapu.rhcloud.com/status

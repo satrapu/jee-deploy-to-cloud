@@ -1,12 +1,16 @@
 package ro.satrapu.jeedeploytocloud;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +25,9 @@ public class StatusServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    @Resource
+    private DataSource dataSource;
+
     /**
      * Processes HTTP requests.
      *
@@ -29,7 +36,7 @@ public class StatusServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException      if an I/O error occurs
      */
-    private static void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
@@ -53,12 +60,24 @@ public class StatusServlet extends HttpServlet {
      * @param request
      * @return
      */
-    private static Map<String, Object> getStatusInfo(HttpServletRequest request) {
+    private Map<String, Object> getStatusInfo(HttpServletRequest request) {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("Server IP", request.getLocalAddr());
         result.put("Server name", request.getLocalName());
         result.put("Server port", request.getLocalPort());
         result.put("Java version", System.getProperty("java.version"));
+
+        try {
+            DatabaseMetaData databaseMetaData = dataSource.getConnection().getMetaData();
+            result.put("JDBC driver name", databaseMetaData.getDriverName());
+            result.put("JDBC driver version", databaseMetaData.getDriverVersion());
+            result.put("Database product name", databaseMetaData.getDatabaseProductName());
+            result.put("Database product version", databaseMetaData.getDatabaseProductVersion());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result.put("Data source", "Unable to get data source info");
+        }
+
         result.put("Client IP", request.getRemoteAddr());
         result.put("Client name", request.getRemoteHost());
         result.put("Request URI", request.getRequestURI());

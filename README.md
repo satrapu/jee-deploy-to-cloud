@@ -12,7 +12,16 @@ Continuous Integration
 
 Deployment
 --
-This application is deployed to different cloud providers using [wercker] (http://wercker.com/). This tool currently supports deploying applications to Heroku and OpenShift.
+~~This application is deployed to different cloud providers using [wercker] (http://wercker.com/). This tool currently supports~~ ~~deploying applications to Heroku and OpenShift.~~ <b>Currently, wercker is not correctly setup, but I plan on fixing it shortly.</b>
+<br/>
+<br/>
+This application is deployed to different cloud providers using their native support.
+<br/>
+* Heroku - enter your Heroku account and enable GitHub integration and automatic deployments from master branch.
+* OpenShift - add your OpenShift git repository URL as a remote on your local repository pointing to GitHub. Then, each time you want your changes from master branch to be deployed to OpenShift, use:
+```bash
+git push openshift master
+```
 
 Live Application
 --

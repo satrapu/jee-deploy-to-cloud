@@ -25,7 +25,7 @@ public class StatusServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    @Resource
+    @Resource(name = "java:jboss/datasources/PostgreSQLDS")
     private DataSource dataSource;
 
     /**

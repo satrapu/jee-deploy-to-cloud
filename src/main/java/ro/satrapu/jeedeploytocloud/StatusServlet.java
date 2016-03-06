@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
 import java.text.MessageFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -41,7 +41,7 @@ public class StatusServlet extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet Status</h1>");
 
-            Map<String, String> statusInfo = getStatusInfo(request);
+            Map<String, Object> statusInfo = getStatusInfo(request);
             writeStatus(statusInfo, out);
 
             out.println("</body>");
@@ -53,16 +53,17 @@ public class StatusServlet extends HttpServlet {
      * @param request
      * @return
      */
-    private static Map<String, String> getStatusInfo(HttpServletRequest request) {
-        Map<String, String> result = new LinkedHashMap<>();
-        result.put("Server IP", "" + request.getLocalAddr());
-        result.put("Server name", "" + request.getLocalName());
-        result.put("Server port", "" + request.getLocalPort());
-        result.put("Client name", request.getRemoteHost());
+    private static Map<String, Object> getStatusInfo(HttpServletRequest request) {
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("Server IP", request.getLocalAddr());
+        result.put("Server name", request.getLocalName());
+        result.put("Server port", request.getLocalPort());
+        result.put("Java version", System.getProperty("java.version"));
         result.put("Client IP", request.getRemoteAddr());
-        result.put("Request context path", request.getContextPath());
+        result.put("Client name", request.getRemoteHost());
+        result.put("Request URI", request.getRequestURI());
         result.put("Request method", request.getMethod());
-        result.put("Current date", DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL).format(new Date()));
+        result.put("Current date", DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now()));
 
         return result;
     }
@@ -71,11 +72,11 @@ public class StatusServlet extends HttpServlet {
      * @param statusInfo
      * @param writer
      */
-    private static void writeStatus(Map<String, String> statusInfo, PrintWriter writer) {
+    private static void writeStatus(Map<String, Object> statusInfo, PrintWriter writer) {
         writer.println("<ul>");
 
         for (String key : statusInfo.keySet()) {
-            String value = statusInfo.get(key);
+            Object value = statusInfo.get(key);
 
             writer.println("<li>");
             writer.println(MessageFormat.format("{0}: {1}", key, value));
@@ -108,6 +109,6 @@ public class StatusServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        throw new ServletException(new UnsupportedOperationException("POST verb not supported"));
     }
 }

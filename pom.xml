@@ -138,7 +138,7 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <appserver.discriminator>wildlfy</appserver.discriminator>
+                <appserver.discriminator>openshift</appserver.discriminator>
             </properties>
             <build>
                 <plugins>

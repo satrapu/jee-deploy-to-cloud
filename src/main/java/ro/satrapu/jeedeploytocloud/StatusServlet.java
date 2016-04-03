@@ -1,20 +1,19 @@
 package ro.satrapu.jeedeploytocloud;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,11 +21,10 @@ import java.util.Map;
  */
 @WebServlet(name = "StatusServlet", urlPatterns = {"/status"})
 public class StatusServlet extends HttpServlet {
-
     private static final long serialVersionUID = 1L;
 
-    @Resource(name = "java:jboss/datasources/PostgreSQLDS")
-    private DataSource dataSource;
+    @Inject
+    private PersistenceService persistenceService;
 
     /**
      * Processes HTTP requests.
@@ -48,8 +46,8 @@ public class StatusServlet extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet Status</h1>");
 
-            Map<String, Object> statusInfo = getStatusInfo(request);
-            writeStatus(statusInfo, out);
+            writeStatus(getStatusInfo(request), out);
+            writePersons(getPersons(), out);
 
             out.println("</body>");
             out.println("</html>");
@@ -66,18 +64,6 @@ public class StatusServlet extends HttpServlet {
         result.put("Server name", request.getLocalName());
         result.put("Server port", request.getLocalPort());
         result.put("Java version", System.getProperty("java.version"));
-
-        try {
-            DatabaseMetaData databaseMetaData = dataSource.getConnection().getMetaData();
-            result.put("JDBC driver name", databaseMetaData.getDriverName());
-            result.put("JDBC driver version", databaseMetaData.getDriverVersion());
-            result.put("Database product name", databaseMetaData.getDatabaseProductName());
-            result.put("Database product version", databaseMetaData.getDatabaseProductVersion());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            result.put("Data source", "Unable to get data source info");
-        }
-
         result.put("Client IP", request.getRemoteAddr());
         result.put("Client name", request.getRemoteHost());
         result.put("Request URI", request.getRequestURI());
@@ -85,24 +71,6 @@ public class StatusServlet extends HttpServlet {
         result.put("Current date", DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now()));
 
         return result;
-    }
-
-    /**
-     * @param statusInfo
-     * @param writer
-     */
-    private static void writeStatus(Map<String, Object> statusInfo, PrintWriter writer) {
-        writer.println("<ul>");
-
-        for (String key : statusInfo.keySet()) {
-            Object value = statusInfo.get(key);
-
-            writer.println("<li>");
-            writer.println(MessageFormat.format("{0}: {1}", key, value));
-            writer.println("</li>");
-        }
-
-        writer.println("</ul>");
     }
 
     /**
@@ -129,5 +97,55 @@ public class StatusServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         throw new ServletException(new UnsupportedOperationException("POST verb not supported"));
+    }
+
+    /**
+     * @param statusInfo
+     * @param writer
+     */
+    private void writeStatus(Map<String, Object> statusInfo, PrintWriter writer) {
+        writer.println("<ul>");
+
+        for (String key : statusInfo.keySet()) {
+            Object value = statusInfo.get(key);
+
+            writer.println("<li>");
+            writer.println(MessageFormat.format("{0}: {1}", key, value));
+            writer.println("</li>");
+        }
+
+        writer.println("</ul>");
+    }
+
+    private void writePersons(List<Person> persons, PrintWriter writer) {
+        writer.println("<div>");
+        writer.println("<table>");
+
+        writer.println("<thead>");
+        writer.println("<td>ID</td>");
+        writer.println("<td>Person Name</td>");
+        writer.println("</thead>");
+
+        writer.println("<tbody>");
+
+        for (Person person : persons) {
+            writer.println("<tr>");
+
+            writer.println(String.format("<td>%d</td>", person.getId()));
+            writer.println(String.format("<td>%s %s %s</td>", person.getFirstName(), person.getMiddleName(), person.getLastName()));
+
+            writer.println("</tr>");
+        }
+
+        writer.println("</tbody>");
+
+        writer.println("</table>");
+        writer.println("</div>");
+    }
+
+    private List<Person> getPersons() {
+        List<Person> result = new ArrayList<>();
+        result.addAll(persistenceService.getPersons());
+        return result;
     }
 }

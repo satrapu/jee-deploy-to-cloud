@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ro.satrapu</groupId>
@@ -72,14 +73,28 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.codearte.jfairy</groupId>
+            <artifactId>jfairy</artifactId>
+            <version>0.5.1</version>
+        </dependency>
     </dependencies>
 
     <profiles>
         <profile>
             <id>heroku</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
+            <properties>
+                <appserver.discriminator>wildfly</appserver.discriminator>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -122,6 +137,9 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            <properties>
+                <appserver.discriminator>wildlfy</appserver.discriminator>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -129,7 +147,7 @@
                         <version>2.6</version>
                         <configuration>
                             <outputDirectory>deployments</outputDirectory>
-                            <warName>ROOT</warName>
+                            <warName>${project.name}</warName>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -138,8 +156,11 @@
 
         <profile>
             <id>wildfly</id>
+            <properties>
+                <appserver.discriminator>wildfly</appserver.discriminator>
+            </properties>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
     </profiles>
@@ -147,6 +168,19 @@
     <build>
         <finalName>${project.name}</finalName>
         <defaultGoal>clean package</defaultGoal>
+        <filters>
+            <filter>src/main/filters/${appserver.discriminator}.properties</filter>
+        </filters>
+        <resources>
+            <!-- replace tokens with actual values coming from the filters (i.e. the data source name found inside persistence.xml) -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

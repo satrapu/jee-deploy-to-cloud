@@ -23,3 +23,6 @@ hs_err_pid*
 # IntelliJ IDEA IDE artifacts
 /.idea
 *.iml
+
+# JRebel configuration file
+src/main/resources/rebel.xml

@@ -7,14 +7,14 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Initializes the underlying database with a number of entities.
  */
 @Startup
 @Singleton
+@SuppressWarnings("unused")
 public class DatabaseInitializer {
     private static final int MAX_AMOUNT_OF_PERSONS_TO_GENERATE = 5;
 
@@ -27,7 +27,7 @@ public class DatabaseInitializer {
     }
 
     private void generatePersons(Fairy fairy, int maxAmount) {
-        for (int i = 0; i < maxAmount; i++) {
+        IntStream.rangeClosed(1, MAX_AMOUNT_OF_PERSONS_TO_GENERATE).forEach(index -> {
             io.codearte.jfairy.producer.person.Person generatedPerson = fairy.person();
 
             Person person = new Person();
@@ -36,6 +36,6 @@ public class DatabaseInitializer {
             person.setLastName(generatedPerson.lastName());
 
             entityManager.persist(person);
-        }
+        });
     }
 }

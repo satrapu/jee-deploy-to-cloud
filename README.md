@@ -12,7 +12,7 @@ Continuous Integration
 
 Deployment
 --
-~~This application is deployed to different cloud providers using [wercker] (http://wercker.com/). This tool currently supports~~ ~~deploying applications to Heroku and OpenShift.~~ <b>Currently, wercker is not correctly setup, but I plan on fixing it shortly.</b>
+~~This application is deployed to different cloud providers using [wercker] (http://wercker.com/). This tool currently supports~~ ~~deploying applications to Heroku and OpenShift.~~ <b>Currently, wercker is not correctly setup, but I plan on fixing it ... sometime.</b>
 <br/>
 <br/>
 This application is deployed to different cloud providers using their native support.

@@ -28,5 +28,5 @@ git push openshift master
 
 Live Application
 --
-* Heroku: https://jee-deploy-to-cloud.herokuapp.com/status
+* ~~Heroku: https://jee-deploy-to-cloud.herokuapp.com/status~~ Currently, it's incorrectly configured, but I plan on fixing it soon (via WildFLy Swarm)
 * OpenShift: http://jee-satrapu.rhcloud.com/jee-deploy-to-cloud/status

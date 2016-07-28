@@ -17,8 +17,11 @@ Deployment
 <br/>
 This application is deployed to different cloud providers using their native support.
 <br/>
-* Heroku - link a GitHub repository with your Heroku account and enable automatic deployments from a specific branch (usually from master)
-* OpenShift - add your OpenShift git repository URL as a remote on your local repository pointing to GitHub. Then, each time you want your changes from master branch to be deployed to OpenShift, use:
+* Heroku - supports, among other deployment options, git deployment; each time you want your local changes from master branch to be deployed to OpenShift, use:
+```bash
+git push heroku master
+```
+* OpenShift - supports, among other deployment options, git deployment; each time you want your local changes from master branch to be deployed to OpenShift, use:
 ```bash
 git push openshift master
 ```

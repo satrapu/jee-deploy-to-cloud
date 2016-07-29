@@ -4,7 +4,7 @@ jee-deploy-to-cloud
 Description
 --
 This application was written in order to experiment with the ways a JEE web application must be configured to successfully deploy it to various (free) cloud providers like Heroku or OpenShift.
-This repo contains a very simple JEE 7 servlet which will display some request related information.
+This repo contains a very simple servlet which will display some request related information and some data coming from a database.
 
 Wiki
 --

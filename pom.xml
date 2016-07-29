@@ -62,6 +62,7 @@
     </developers>
 
     <properties>
+        <version.maven-compiler-plugin>3.5.1</version.maven-compiler-plugin>
         <version.maven-war-plugin>2.6</version.maven-war-plugin>
         <version.wildfly.swarm>1.0.0.Final</version.wildfly.swarm>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -116,7 +117,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>${version.maven-compiler-plugin}</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -206,6 +207,20 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${version.maven-compiler-plugin}</version>
+                        <configuration>
+                            <excludes>
+                                <!--
+                                  do not compile classes related to WildFly Swarm, used only by "heroku" profile
+                                -->
+                                <exclude>**/WildFlySwarmBoostrapper.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <version>${version.maven-war-plugin}</version>
                         <configuration>
@@ -219,6 +234,24 @@
 
         <profile>
             <id>wildfly</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${version.maven-compiler-plugin}</version>
+                        <configuration>
+                            <excludes>
+                                <!--
+                                  do not compile classes related to WildFly Swarm, used only by "heroku" profile
+                                -->
+                                <exclude>**/WildFlySwarmBoostrapper.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>

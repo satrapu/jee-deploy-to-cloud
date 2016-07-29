@@ -63,9 +63,22 @@
 
     <properties>
         <version.maven-war-plugin>2.6</version.maven-war-plugin>
+        <version.wildfly.swarm>1.0.0.Final</version.wildfly.swarm>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <environment>wildfly</environment>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>bom</artifactId>
+                <version>${version.wildfly.swarm}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -124,11 +137,63 @@
 
     <profiles>
         <profile>
+            <!--
+              used for running the application on Heroku cloud platform
+            -->
             <id>heroku</id>
-
             <properties>
                 <environment>heroku</environment>
             </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>cdi</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>datasources</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>ejb</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>jpa-postgresql</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>jsf</artifactId>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.wildfly.swarm</groupId>
+                        <artifactId>wildfly-swarm-plugin</artifactId>
+                        <version>${version.wildfly.swarm}</version>
+                        <configuration>
+                            <!--
+                              ensure a custom WildFly Swarm container is started (the one containing a datasource pointing to a Heroku managed database)
+                            -->
+                            <mainClass>ro.satrapu.jeedeploytocloud.WildFlySwarmBoostrapper</mainClass>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>package</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
 
         <profile>

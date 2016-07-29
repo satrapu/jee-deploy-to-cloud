@@ -25,7 +25,10 @@ git push heroku master
 ```bash
 git push openshift master
 ```
-Please consult the [wiki](https://github.com/satrapu/jee-deploy-to-cloud/wiki) for more information.
+
+Wiki
+--
+Please consult the [wiki](https://github.com/satrapu/jee-deploy-to-cloud/wiki) for more information regarding the steps one would need to follow in order to successfully deploy a JEE application to specific cloud providers.
 
 Live Application
 --

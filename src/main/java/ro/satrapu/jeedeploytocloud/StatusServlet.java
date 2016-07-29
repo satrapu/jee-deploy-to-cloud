@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * @author satrapu
  */
-@WebServlet(name = "StatusServlet", urlPatterns = {"/status"})
+@WebServlet(name = "StatusServlet", urlPatterns = {"/"})
 public class StatusServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

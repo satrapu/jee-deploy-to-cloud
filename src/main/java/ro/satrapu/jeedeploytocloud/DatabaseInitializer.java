@@ -1,7 +1,5 @@
 package ro.satrapu.jeedeploytocloud;
 
-import io.codearte.jfairy.Fairy;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -23,17 +21,15 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void initializeDatabase() {
-        generatePersons(Fairy.create(), MAX_AMOUNT_OF_PERSONS_TO_GENERATE);
+        generatePersons(MAX_AMOUNT_OF_PERSONS_TO_GENERATE);
     }
 
-    private void generatePersons(Fairy fairy, int maxAmount) {
+    private void generatePersons(int maxAmount) {
         IntStream.rangeClosed(1, MAX_AMOUNT_OF_PERSONS_TO_GENERATE).forEach(index -> {
-            io.codearte.jfairy.producer.person.Person generatedPerson = fairy.person();
-
             Person person = new Person();
-            person.setFirstName(generatedPerson.firstName());
-            person.setMiddleName(generatedPerson.middleName());
-            person.setLastName(generatedPerson.lastName());
+            person.setFirstName("FirstName_" + index);
+            person.setMiddleName("MiddleName_" + index);
+            person.setLastName("LastName_" + index);
 
             entityManager.persist(person);
         });

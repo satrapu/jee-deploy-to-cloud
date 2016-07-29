@@ -6,6 +6,10 @@ Description
 This application was written in order to experiment with the ways a JEE web application must be configured to successfully deploy it to various (free) cloud providers like Heroku or OpenShift.
 This repo contains a very simple JEE 7 servlet which will display some request related information.
 
+Wiki
+--
+Please consult the [wiki](https://github.com/satrapu/jee-deploy-to-cloud/wiki) for more information regarding the steps one would need to follow in order to successfully deploy a JEE application to specific cloud providers.
+
 Continuous Integration
 --
 * drone.io: [![Build Status](https://drone.io/github.com/satrapu/jee-deploy-to-cloud/status.png)](https://drone.io/github.com/satrapu/jee-deploy-to-cloud/latest)
@@ -25,10 +29,6 @@ git push heroku master
 ```bash
 git push openshift master
 ```
-
-Wiki
---
-Please consult the [wiki](https://github.com/satrapu/jee-deploy-to-cloud/wiki) for more information regarding the steps one would need to follow in order to successfully deploy a JEE application to specific cloud providers.
 
 Live Application
 --

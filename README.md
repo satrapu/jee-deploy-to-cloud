@@ -28,5 +28,5 @@ git push openshift master
 
 Live Application
 --
-* ~~Heroku: https://jee-deploy-to-cloud.herokuapp.com/status~~ Currently, it's incorrectly configured, but I plan on fixing it soon by deploying an uberjar built via [WildFly Swarm](http://wildfly-swarm.io/) and starting a Heroky web dyno with "java -jar ...-swarm.jar"
+* Heroku: https://jee-deploy-to-cloud.herokuapp.com/status
 * OpenShift: http://jee-satrapu.rhcloud.com/status/

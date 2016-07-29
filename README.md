@@ -17,7 +17,7 @@ Deployment
 <br/>
 This application is deployed to different cloud providers using their native support.
 <br/>
-* Heroku - supports, among other deployment options, git deployment; each time you want your local changes from master branch to be deployed to OpenShift, use:
+* Heroku - supports, among other deployment options, git deployment; each time you want your local changes from master branch to be deployed to Heroku, use:
 ```bash
 git push heroku master
 ```

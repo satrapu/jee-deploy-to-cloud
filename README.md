@@ -8,7 +8,7 @@ This repo contains a very simple servlet which will display some request related
 
 Wiki
 --
-Please consult the [wiki](https://github.com/satrapu/jee-deploy-to-cloud/wiki) for more information regarding the steps one would need to follow in order to successfully deploy a JEE application to specific cloud providers.
+Please consult the [wiki](https://github.com/satrapu/jee-deploy-to-cloud/wiki) for more information.
 
 Continuous Integration
 --

@@ -1,4 +1,4 @@
-jee-deploy-to-cloud
+Deploy a JEE web application to the cloud
 =
 
 Description

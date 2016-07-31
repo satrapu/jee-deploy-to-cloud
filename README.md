@@ -3,8 +3,8 @@ Deploy a JEE web application to the cloud
 
 Description
 --
-This application was written in order to experiment with the ways a JEE web application must be configured to successfully deploy it to various (free) cloud providers like Heroku or OpenShift.
-This repo contains a very simple servlet which will display some request related information and some data coming from a database.
+This application was written in order to show the steps one would need to follow for deploying a JEE web application to various (free) cloud platforms like Heroku or OpenShift.
+This repository contains a very simple servlet which will display some request related information and some data coming from a database.
 
 
 Wiki

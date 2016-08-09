@@ -8,7 +8,7 @@ This application was written in order to show the steps one would need to follow
 This repository contains a very simple servlet which will display some request related information and some data coming from a database.
 
 
-Wiki [Draft]
+Documentation [Draft]
 --
 Please consult the [wiki](https://github.com/satrapu/jee-deploy-to-cloud/wiki) for more information.
 

@@ -8,3 +8,6 @@ deployments
 
 # JRebel
 src/main/resources/rebel.xml
+
+# Heroku
+.env

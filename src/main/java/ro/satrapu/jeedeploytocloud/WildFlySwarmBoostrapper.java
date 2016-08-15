@@ -35,7 +35,7 @@ public class WildFlySwarmBoostrapper {
         // will be able to find a suitable datasource
         container.deploy(buildDatasourceArchive(System.getenv(ENVIRONMENT_VARIABLE_DATABASE_URL)));
 
-        //deploy the JEE 7 application (i.e. CDI, EJP, JPA and JSF fractions)
+        //deploy the JEE 7 application, containing configured Swarm fractions like CDI, EJB, etc.
         container.deploy(container.createDefaultDeployment());
     }
 
